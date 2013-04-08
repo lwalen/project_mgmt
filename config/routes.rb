@@ -1,7 +1,9 @@
 ProjectMgmt::Application.routes.draw do
 
+	root :to => 'pages#index'
 
 	match '/auth/:provider/callback', to: 'sessions#create'
+	match '/logout' => 'sessions#destroy', as: :logout
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
