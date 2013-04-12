@@ -40,6 +40,14 @@ class ListsController < ApplicationController
 		end
 	end
 
+	def show
+		@list = List.find(params[:id])
+		respond_to do |format|
+			format.html
+			format.json { render json: @list }
+		end
+	end
+
 	def destroy
 		@list = List.find(params[:id])
 		@list.destroy
