@@ -5,9 +5,11 @@ class PagesController < ApplicationController
 
 		@upcoming_tasks = []
 
-		current_user.tasks.each do |task|
-			if task.due_date != nil && !task.complete? && (task.due_date - @today).to_i < 3
-				@upcoming_tasks << task
+		if current_user
+			current_user.tasks.each do |task|
+				if task.due_date != nil && !task.complete? && (task.due_date - @today).to_i < 3
+					@upcoming_tasks << task
+				end
 			end
 		end
 

@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
 			user.name = auth['info']['name']
 		end
 	end
+
+	def to_s
+		name
+	end
 end

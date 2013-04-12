@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
   attr_accessible :content, :due_date, :user_id, :complete
 
 	belongs_to :user
+	has_and_belongs_to_many :list
 
 	scope :incomplete, where(:complete => false)
 	default_scope order('due_date IS NULL, due_date ASC')
