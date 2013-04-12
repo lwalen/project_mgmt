@@ -1,7 +1,0 @@
-<div class="well well-small">
-	<h4>Add Task</h4>
-	<%= form_for Task.new, html: {class: 'form-inline'} do |f| %>
-		<%= f.text_field :content, class: 'input-medium' %>
-		<%= f.submit 'Add', class: 'btn' %>
-	<% end %>
-</div>

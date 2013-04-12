@@ -1,2 +1,27 @@
-<h1>Tasks#edit</h1>
-<p>Find me in app/views/tasks/edit.html.erb</p>
+<% if @task.errors.any? %>
+	<% @task.errors.full_messages.each do |msg| %>
+		<div class="alert alert-error"><%= msg %></div>
+	<% end %>
+<% end %>
+
+
+
+<%= form_for @task, html: {class: 'form'} do |f| %>
+
+	<%= f.label :content %>
+	<%= f.text_area :content, class: 'input-xlarge', rows: 3 %>
+	<%= f.label :due_date %>
+	<%= f.text_field :due_date,
+		id: 'due-date',
+		class: 'input-small',
+		placeholder: 'due date' %>
+	<%= f.label :user_id %>
+	<%= f.select :user_id, @users, include_blank: true %>
+	<br/>
+	<%= f.submit 'Save', class: 'btn btn-info'%>
+	<%= cancel_link %>
+<% end %>
+
+<script type="text/javascript">
+	$('#due-date').datepicker({ format: 'yyyy-mm-dd' });
+</script>

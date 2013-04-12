@@ -1,7 +1,60 @@
-<% @tasks.each do |task| %>
-	<div>
-		<p><%= task.content %></p>
-	</div>
-<% end %>
 
-<%= render 'new' %>
+<h1>Tasks</h1>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Task</th>
+			<th>Due Date</th>
+			<th>User</th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% @tasks.each do |task| %>
+			<tr class="<%= task.complete? ? 'success' : '' %>">
+				<td>
+					<%= form_for task do |f| %>
+						<%= f.check_box :complete %>
+					<% end %>
+					<script>
+						$(':checkbox').on('click', function() {
+							$(this).closest('form').submit();
+						});
+					</script>
+				</td>
+				<td><%= task.content %></td>
+				<td class="nowrap"><%= task.date %></td>
+				<td><%= task.user.name if task.user_id != nil %></td>
+				<td class="nowrap">
+					<%= link_to 'edit', edit_task_path(task.id) %>
+					<%= link_to 'delete', task,
+						confirm: 'Are you sure you wish to delete this task?',
+						method: :delete %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+
+	<tfoot>
+		<tr>
+			<td></td>
+			<%= form_for @task, html: {class: 'form-inline'} do |f| %>
+				<td><%= f.text_area :content, class: 'input-xlarge', rows: 3 %></td>
+				<td>
+					<%= f.text_field :due_date,
+						id: 'due-date',
+						class: 'input-small',
+						placeholder: 'due date' %>
+				</td>
+				<td><%= f.select :user_id, @users, include_blank: true %></td>
+				<td><%= f.submit 'Add', class: 'btn' %></td>
+			<% end %>
+		</tr>
+		<script type="text/javascript">
+			$('#due-date').datepicker({ format: 'yyyy-mm-dd' });
+		</script>
+	</tfoot>
+</table>
+

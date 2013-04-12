@@ -8,6 +8,16 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def show
+		@user = User.find(params[:id])
+		@tasks = @user.tasks
+
+		respond_to do |format|
+			format.html
+			format.json { render json: @user }
+		end
+	end
+
 	def invite
 		respond_to do |format|
 			user = User.find(params[:id])

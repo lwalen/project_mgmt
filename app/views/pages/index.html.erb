@@ -1,43 +1,60 @@
-<% if current_user %>
-	<%= current_user.name %>
-	<%= link_to 'Log Out', logout_path %>
-<% else %>
-	<%= link_to 'Log in with Facebook', '/auth/facebook' %>
-<% end %>
+<div class="hero-unit">
+	<% if current_user %>
+		<h4>Hello, <%= current_user.name.split.first %>.</h4>
 
+		<% if @upcoming_tasks.size > 0 %>
+			<h2>Upcoming tasks</h2>
+			<table class="table">
+				<% @upcoming_tasks.each do |task| %>
+					<tr>
+						<td class="nowrap"><p><%= task.date %></p></td>
+						<td><small><%= task.content %></small></td>
+					</tr>
+				<% end %>
+			</table>
+		<% end %>
 
-<% if current_user %>
-	<p>invites remaining: <%= current_user.invites %></p>
-<% end %>
-<% if current_user && current_user.invites > 0 %>
+		<br/>
+		<br/>
+		<p>You have <%= current_user.invites %> invitations left.
 
-	<p><%= link_to "Invite Facebook Friends", "#", id: "invite_fb_friends" %></p>
-	<div id="fb-root"></div>
+		<% if current_user.invites > 0 %>
+			<%= link_to "Invite Facebook Friends", "#", id: "invite_fb_friends" %></p>
+			<div id="fb-root"></div>
 
-	<script src="http://connect.facebook.net/en_US/all.js"></script>
+			<script src="http://connect.facebook.net/en_US/all.js"></script>
 
-	<script>
-		$(function() {
+			<script>
+				$(function() {
 
-			$('a#invite_fb_friends').click(function() {
-				FB.init({
-					appId:  '503870553012195',
-					cookie: false,
-					status: true
+					$('a#invite_fb_friends').click(function() {
+						FB.init({
+							appId:  '503870553012195',
+							cookie: false,
+							status: true
+						});
+
+						FB.ui(
+						{ 
+							method: 'apprequests', 
+							message: '<%= current_user.name %> has invited you to join ProjectMgmt. Please disable https on Facebook in order to accept.'
+						},
+						function(response) {
+							if (response && response.post_id) {
+								$.post('/users/invite', {id: '<%= current_user.id %>'});
+							}
+						});
+					});
 				});
+			</script>
+		<% else %>
+			</p>
+		<% end %>
+	<% else %>
 
-				FB.ui(
-				{ 
-					method: 'apprequests', 
-					message: '<%= current_user.name %> has invited you to join Project Mgmt'
-				},
-				function(response) {
-					if (response && response.post_id) {
-						$.post('/users/invite', {id: '<%= current_user.id %>'});
-					}
-				});
-			});
-		});
-	</script>
-
-<% end %>
+		<h3>Welcome to ProjectMgmt, a task tracker.</h3>
+		<h3>
+			<%= link_to 'Login with Facebook', '/auth/facebook', class: 'btn btn-info' %>
+		</h3>
+	<% end %>
+</div>

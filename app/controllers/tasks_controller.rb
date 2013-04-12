@@ -1,11 +1,18 @@
 class TasksController < ApplicationController
 
 	def index
-		@tasks = Task.all
+		if current_user != nil
+			@tasks = Task.all
+			@task = Task.new
+			@users = User.all.collect { |u| [u.name, u.id] }
 
-		respond_to do |format|
-			format.html # index.html.erb
-			format.json { render json: @tasks }
+			respond_to do |format|
+				format.html # index.html.erb
+				format.json { render json: @tasks }
+			end
+		else
+			message 'error', 'You must be logged in to view this page'
+			redirect_to root_path
 		end
 	end
 
@@ -18,7 +25,7 @@ class TasksController < ApplicationController
 
 		respond_to do |format|
 			if @task.save
-				message 'success', "Task "#{@task.content}" was successfully created."
+				message 'success', "Task successfully created."
 				format.html { redirect_to tasks_path }
 				format.json { render json: @task, status: :created, location: @task }
 			else
@@ -39,23 +46,14 @@ class TasksController < ApplicationController
 
 	def edit
 		@task = Task.find(params[:id])
-		unless current_user.id == @task.user_id
-			message 'error', "You do not have permission to edit this task."
-			redirect_to root_path
-		end
-
+		@users = User.all.collect { |u| [u.name, u.id] }
 	end
 
 	def destroy
 		@task = Task.find(params[:id])
-		if current_user.id == @task.user_id
-			@task.destroy
-			message 'success', "Task deleted successfully."
-			redirect_to root_path
-		else
-			message 'error', "You do not have permission to delete this task."
-			redirect_to root_path
-		end
+		@task.destroy
+		message 'success', "Task deleted successfully."
+		redirect_to tasks_path
 	end
 
 	def update
@@ -63,9 +61,9 @@ class TasksController < ApplicationController
 
 		respond_to do |format|
 			if @task.update_attributes(params[:task])
-				message 'success', "Task '#{@task.name}' was successfully updated."
-					format.html { redirect_to root_path }
-					format.json { head :no_content }
+				message 'success', "Task successfully updated."
+				format.html { redirect_to tasks_path }
+				format.json { head :no_content }
 			else
 				format.html { render action: "edit" }
 				format.json { render json: @task.errors, status: :unprocessable_entity }

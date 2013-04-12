@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+	protect_from_forgery
 
 	helper_method :current_user
 
@@ -11,4 +11,5 @@ class ApplicationController < ActionController::Base
 		flash[:notice_type] = type
 		flash[:notice] = content
 	end
+
 end

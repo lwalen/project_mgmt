@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>ProjectMgmt</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+		<title>ProjectMgmt</title>
+		<%= stylesheet_link_tag    "application", :media => "all" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
 
-<%= yield %>
+		<div class="container">
+			<div class="navbar navbar-inverse navbar-static-top">
+				<div class="navbar-inner">
+					<div class="container-fluid">
+						<ul class="nav">
+							<li><%= link_to 'Project Mgmt', root_path, class: 'brand' %></li>
+						</ul>
+						<ul class="nav pull-right">
+							<% if current_user != nil %>
+								<li><%= link_to 'users', users_path %></li>
+								<li class="divider-vertical"></li>
+								<li><%= link_to 'all tasks', tasks_path %></li>
+								<li class="divider-vertical"></li>
+								<li><%= link_to 'my tasks', current_user %></li>
+								<li class="divider-vertical"></li>
+								<li><%= link_to 'logout', logout_url %></li>
+							<% else %>
+								<li><%= link_to 'login with facebook', '/auth/facebook' %></li>
+							<% end %>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<br/>
 
-</body>
+			<div class="container-fluid">
+				<% if notice %>
+					<div class="alert alert-<%= flash[:notice_type] %>">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= notice %>
+					</div>
+				<% end %>
+			</div>
+			<div class="container-fluid">
+				<%= yield %>
+			</div>
+		</div>
+
+	</body>
 </html>
