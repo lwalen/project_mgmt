@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  content: MyString
+  due_date: 2013-04-11
+  user_id: 
+
+two:
+  content: MyString
+  due_date: 2013-04-11
+  user_id: 

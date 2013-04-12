@@ -1,6 +1,7 @@
 <h1>Users#index</h1>
 <% User.all.each do |u| %>
 
-	<p><%= u.name %></p>
+	<p><%= u.name %> <%= u.id %></p>
+	<p><%= u.invites %></p>
 
 <% end%>

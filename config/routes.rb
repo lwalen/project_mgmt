@@ -1,10 +1,8 @@
 ProjectMgmt::Application.routes.draw do
 
-  get "users/index"
-
-  get "user/index"
-
 	root :to => 'pages#index'
+
+	post 'users/invite'
 
 	post 'pages/authorize'
 

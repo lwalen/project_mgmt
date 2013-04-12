@@ -7,25 +7,37 @@
 
 
 <% if current_user %>
+	<p>invites remaining: <%= current_user.invites %></p>
+<% end %>
+<% if current_user && current_user.invites > 0 %>
 
 	<p><%= link_to "Invite Facebook Friends", "#", id: "invite_fb_friends" %></p>
 	<div id="fb-root"></div>
 
-		<script src="http://connect.facebook.net/en_US/all.js"></script>
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
 
-		<script>
-			$(function() {
+	<script>
+		$(function() {
 
-				$('a#invite_fb_friends').click(function() {
-					FB.init({
-						appId:  '503870553012195',
-						cookie: false,
-						status: true
-					});
+			$('a#invite_fb_friends').click(function() {
+				FB.init({
+					appId:  '503870553012195',
+					cookie: false,
+					status: true
+				});
 
-					FB.ui({ method: 'apprequests', message: '<%= current_user.name %> has invited you to join Project Mgmt'});
+				FB.ui(
+				{ 
+					method: 'apprequests', 
+					message: '<%= current_user.name %> has invited you to join Project Mgmt'
+				},
+				function(response) {
+					if (response && response.post_id) {
+						$.post('/users/invite', {id: '<%= current_user.id %>'});
+					}
 				});
 			});
-		</script>
+		});
+	</script>
 
 <% end %>
