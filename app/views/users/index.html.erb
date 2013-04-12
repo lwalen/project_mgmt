@@ -1,5 +1,5 @@
 <h1>Users#index</h1>
-<% User.all.each do |u| %>
+<% @users.each do |u| %>
 
 	<p><%= u.name %> <%= u.id %></p>
 	<p><%= u.invites %></p>

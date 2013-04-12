@@ -1,5 +1,6 @@
 ProjectMgmt::Application.routes.draw do
 
+
 	root :to => 'pages#index'
 
 	post 'users/invite'
@@ -10,6 +11,7 @@ ProjectMgmt::Application.routes.draw do
 	match '/logout' => 'sessions#destroy', as: :logout
 
 	resources :users
+	resources :tasks
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

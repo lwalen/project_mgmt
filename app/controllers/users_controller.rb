@@ -1,5 +1,11 @@
 class UsersController < ApplicationController
 	def index
+		@users = User.all
+
+		respond_to do |format|
+			format.html
+			format.json { render json: @users }
+		end
 	end
 
 	def invite
@@ -7,7 +13,7 @@ class UsersController < ApplicationController
 			user = User.find(params[:id])
 			user.invites -= 1
 			user.save
-			format.html # new.html.erb
+			format.html
 			format.json { render json: user }
 		end
 	end
