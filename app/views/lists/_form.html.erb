@@ -11,10 +11,11 @@
 	<%= f.text_field :name %>
 
 	<%= f.label :tasks %>
-	<%= f.collection_select :tasks, 
-		:tasks,
-		Tasks.all,
-		:id %>
+	<%= f.select :tasks, 
+		@tasks.sort_by { |x| x.first.downcase }, 
+		{}, 
+		{ :multiple => true, size: @tasks.count } %>
+
 
 	<br/>
 	<%= f.submit class: 'btn btn-info' %>
