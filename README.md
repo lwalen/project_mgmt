@@ -6,11 +6,19 @@ Project manager for social networks
 Installation
 ------------
 
-Clone repository onto machine with Ruby and Rails. 
-Place supplied file 'facebook.yml' in /project_mgmt/config/
+* Clone repository onto machine with Ruby and Rails. 
+* Create a Facebook app. Copy the App ID and App Secret into the supplied facebook.yml as in the comment. 
+* On the 'Apps > <project_name> > Basic' page, click 'Website with Facebook Login' and enter 'http://<your-domain>:3000'
+* Click 'App on Facebook' and enter 'http://<your-domain>:3000/pages/authorize'.
+* You may wish to disable Sandbox Mode to let non-developers test the app.
+* Click 'Save Changes'
+* Place supplied file 'facebook.yml' in '/<repository_name>/config/'
+* In app directory run `rails s -e production`.
+* Point web browser to http://<your-domain>:3000
 
-In app directory run `rails s -e production`.
-Point web browser to http://localhost:3000
+_OR_
+
+* go to http://walen.me:3002 to try out the app
 
 
 Notes
