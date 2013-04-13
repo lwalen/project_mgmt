@@ -9,7 +9,7 @@ Installation
 * Clone repository onto machine with Ruby and Rails. 
 * Create a Facebook app. Copy the App ID and App Secret into the supplied facebook.yml as in the comment. 
 * On the 'Apps > \<project_name\> > Basic' page, click 'Website with Facebook Login' and enter `http://<your-domain>:3000`
-* Click 'App on Facebook' and enter `http://\<your-domain\>:3000/pages/authorize`
+* Click 'App on Facebook' and enter `http://<your-domain>:3000/pages/authorize`
 * You may wish to disable Sandbox Mode to let non-developers test the app.
 * Click 'Save Changes'
 * Place supplied file 'facebook.yml' in '/\<repository_name\>/config/'
