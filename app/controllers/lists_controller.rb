@@ -29,7 +29,6 @@ class ListsController < ApplicationController
 				format.json { render json: @list.errors, status: :unprocessable_entity }
 			end
 		end
-		
 	end
 
 	def index

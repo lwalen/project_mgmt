@@ -1,11 +1,25 @@
-<h2><%= @list.name %></h2>
-<p class="pull-right"><%= link_to 'delete', @list,
-	confirm: 'Are you sure you wish to delete this list?',
-	method: :delete %>
-</p>
+<%= link_to 'All lists', lists_path %>
+
+<h2><%= @list.name %>
+	<small>
+		<%= link_to 'delete', @list,
+			confirm: 'Are you sure you wish to delete this list?',
+			method: :delete %>
+	</small>
+</h2>
 <table class="table">
 	<% @list.tasks.each do |task| %>
-		<tr>
+			<tr class="<%= task.complete? ? 'success' : '' %>">
+			<td>
+				<%= form_for task do |f| %>
+					<%= f.check_box :complete %>
+				<% end %>
+				<script>
+					$(':checkbox').on('click', function() {
+						$(this).closest('form').submit();
+					});
+				</script>
+			</td>
 			<td><%= task.content %></td>
 			<td><%= task.date %></td>
 			<td><%= task.user %></td>
